@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Test</title>
+</head>
+<body>
+
+<h2>Register User</h2>
+
+<button onclick="registerUser()">Register</button>
+
+<script>
+function registerUser() {
+    fetch("http://127.0.0.1:5000/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: "Saurabh",
+            email: "saurabh@gmail.com",
+            password: "1234"
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(JSON.stringify(data));
+        console.log(data);
+    })
+    .catch(error => console.error("Error:", error));
+}
+</script>
+
+</body>
+</html>
