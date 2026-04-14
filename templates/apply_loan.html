@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apply Loan - CreditAI</title>
+</head>
+<body>
+    <h2>Apply Loan</h2>
+    <form id="loanForm">
+        Income: <input type="number" id="income"><br><br>
+        Loan Amount: <input type="number" id="loan_amount"><br><br>
+        CIBIL Score: <input type="number" id="cibil_score"><br><br>
+        Tenure (months): <input type="number" id="tenure"><br><br>
+        <button type="submit">Apply</button>
+    </form>
+
+    <h3>Result:</h3>
+    <pre id="result"></pre>
+
+<script>
+document.getElementById("loanForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    const response = await fetch("/apply-loan", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+            income: document.getElementById("income").value,
+            loan_amount: document.getElementById("loan_amount").value,
+            cibil_score: document.getElementById("cibil_score").value,
+            tenure_months: document.getElementById("tenure").value
+        })
+    });
+
+    const data = await response.json();
+    document.getElementById("result").textContent =
+        JSON.stringify(data, null, 2);
+});
+</script>
+</body>
+</html>
